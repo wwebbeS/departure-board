@@ -591,7 +591,7 @@ $(document).ready(function () {
                     });
 
                     var dateTime = new Date(
-                        date[2], date[1] - 1, date[0],
+                        date[2] < 2000 ? date[2] + 2000 : date[2], date[1] - 1, date[0],
                         time[0], time[1]
                     );
 
@@ -674,7 +674,13 @@ $(document).ready(function () {
 
                     var parts = value[2]
                         .split('/');
-                    parts[2] = parseInt(parts[2]) - 2000;
+
+                    var year = parseInt(parts[2]);
+                    if (year > 2000) {
+                        year -= 2000;
+                    }
+
+                    parts[2] = year;
 
                     $($dates[difference]).html(displayString(parts.join(''), 6));
                     $($times[difference]).html(displayString(value[3].replace(':', ''), 4));
@@ -701,7 +707,12 @@ $(document).ready(function () {
                         var parts = value[2]
                             .split('/');
 
-                        parts[2] = parseInt(parts[2]) - 2000;
+                        var year = parseInt(parts[2]);
+                        if (year > 2000) {
+                            year -= 2000;
+                        }
+
+                        parts[2] = year;
 
                         return '<div class="row"><div class="departure-line date filled">' +
                             displayString(parts.join(''), 6) +
@@ -734,7 +745,7 @@ $(document).ready(function () {
                     $('input.first-name', $displays),
                     parseInput(
                         filteredValues.map(function (value) {
-                            return value[0]
+                            return value[0].substring(0, 10);
                         }).join('\n'),
                         namesColCount
                     )
@@ -744,7 +755,7 @@ $(document).ready(function () {
                     $('input.last-name', $displays),
                     parseInput(
                         filteredValues.map(function (value) {
-                            return value[1]
+                            return value[1].substring(0, 10);
                         }).join('\n'),
                         namesColCount
                     )
@@ -757,7 +768,12 @@ $(document).ready(function () {
                             var parts = value[2]
                                 .split('/');
 
-                            parts[2] = parseInt(parts[2]) - 2000;
+                            var year = parseInt(parts[2]);
+                            if (year > 2000) {
+                                year -= 2000;
+                            }
+
+                            parts[2] = year;
 
                             return parts.join('');
                         }).join('\n'),
